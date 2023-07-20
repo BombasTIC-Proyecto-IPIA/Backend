@@ -7,7 +7,7 @@ const utilitiesService = require(`../../services/utilities/utilitiesService`);
 
 // Configuración de Multer para el almacenamiento de archivos
 const storage = multer.diskStorage({
-    destination: './uploads',
+    destination: './scriptPY',
     filename: (req, file, cb) => {
         // Generar un nombre único para el archivo
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
