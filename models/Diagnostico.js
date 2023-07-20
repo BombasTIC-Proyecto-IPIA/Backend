@@ -5,12 +5,13 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
+        resultado_Prediccion:{
+            type: DataTypes.BOOLEAN,
+            allowNull:false,
+        },
         resultados:{
             type: DataTypes.STRING,
-            allowNull:false,
-            validate:{
-                notEmpty: true,
-            },
+            allowNull:true,
         },
         documento:{
             type: DataTypes.BLOB('medium'),

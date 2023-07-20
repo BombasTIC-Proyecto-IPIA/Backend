@@ -26,6 +26,7 @@ const createNewDiagnostico = async (diagnostico, fichero) => {
                 resultados: diagnostico.resultados,
                 documento: pdf,
                 PacienteDni: diagnostico.PacienteDni,
+                resultado_Prediccion: diagnostico.resultado_Prediccion,
             }).catch(err => {
                 if (err) {
                     console.log(err);

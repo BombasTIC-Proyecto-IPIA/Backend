@@ -3,6 +3,8 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const diagnosticoService = require(`../../services/api/diagnosticoService`)
 
+
+
 const getAllDiagnosticos = async (req, res) => {
     const allDiagnosticos = await diagnosticoService.getAllDiagnosticos();
     res.send(allDiagnosticos);

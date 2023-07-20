@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const authController = require(`../../controllers/utilities/utilitiesController`)
+const utilitiesController = require(`../../controllers/utilities/utilitiesController`)
 
 router
-    .post(`/save-file`, authController.saveFile);
+    .post(`/executeModel`, utilitiesController.ejecutarModelo );
 
 module.exports = router;
