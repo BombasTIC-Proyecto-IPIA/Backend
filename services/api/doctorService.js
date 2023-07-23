@@ -60,7 +60,6 @@ const updateOneDoctor = async (doctor, dni) => {
                 }
             })
     } catch (err) {
-        console.log("hola2");
         return null;
     }
     return updatedDoctor;
