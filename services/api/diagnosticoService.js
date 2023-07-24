@@ -15,18 +15,15 @@ const getOneDiagnosticoByPaciente = async (dni) => {
     const diagnostico = await Diagnostico.findOne({ where: { PacienteDni: dni } });
     return JSON.stringify(diagnostico, null, 2);
 }
-
-const createNewDiagnostico = async (diagnostico, fichero) => {
-    if (diagnostico != null) {
-        const pacienteDiagnosticado = await Paciente.findOne({ where: { dni: diagnostico.PacienteDni } });
+const createNewDiagnostico = async (diagnosticoData, fileData) => {
+    if (diagnosticoData != null && fileData != null) {
+        const pacienteDiagnosticado = await Paciente.findOne({ where: { dni: diagnosticoData.PacienteDni } });
         if (pacienteDiagnosticado != undefined) {
-            const pdf = fs.readFileSync(fichero.path);
-            console.log(fichero);
             const newDiagnostico = await Diagnostico.create({
-                resultados: diagnostico.resultados,
-                documento: pdf,
-                PacienteDni: diagnostico.PacienteDni,
-                resultado_Prediccion: diagnostico.resultado_Prediccion,
+                resultados: diagnosticoData.resultados,
+                imagen: fileData.data, // Save the image data from the fileData object
+                PacienteDni: diagnosticoData.PacienteDni,
+                resultado_Prediccion: diagnosticoData.resultado_Prediccion,
             }).catch(err => {
                 if (err) {
                     console.log(err);
@@ -34,11 +31,9 @@ const createNewDiagnostico = async (diagnostico, fichero) => {
             });
             return newDiagnostico;
         }
-
     }
-    return null
-
-}
+    return null;
+};
 
 const updateOneDiagnostico = async (diagnostico, dni, fichero) => {
     var updatedDiagnostico = null;

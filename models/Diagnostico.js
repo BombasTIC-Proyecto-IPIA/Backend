@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull:true,
         },
-        documento:{
+        imagen:{
             type: DataTypes.BLOB('medium'),
             allowNull:false,
         }

@@ -3,7 +3,7 @@
     "username": "remote",
     "password": "remote",
     "database": "Proj_Bomb_IPIA",
-    "host": "192.168.0.17",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {

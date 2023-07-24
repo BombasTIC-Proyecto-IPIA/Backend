@@ -1,6 +1,8 @@
 // const { all } = require("../../routes/auth");
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+// Configure multer to handle file uploads
+const storage = multer.memoryStorage(); // Use memory storage to avoid writing files to disk
+const upload = multer({ storage: storage });
 const diagnosticoService = require(`../../services/api/diagnosticoService`)
 
 
@@ -16,7 +18,7 @@ const getOneDiagnostico = async (req, res) => {
 };
 
 const createNewDiagnostico = async (req, res) => {
-    upload.single('pdf')(req, res, async function (err) {
+    upload.single('imagen')(req, res, async function (err) {
         if (err instanceof multer.MulterError) {
             // Error de multer
             console.error('Error de multer:', err);
@@ -26,16 +28,25 @@ const createNewDiagnostico = async (req, res) => {
             console.error('Otro error:', err);
             return res.status(500).send('Ocurrió un error al cargar el archivo PDF.');
         }
-        const createdDiagnostico = await diagnosticoService.createNewDiagnostico(req.body, req.file);
-        if (createdDiagnostico == undefined) {
+
+        // The uploaded file is available as req.file
+        const { originalname, buffer, mimetype } = req.file;
+
+        // Now you can pass the file data to the createNewDiagnostico function along with other data
+        const createdDiagnostico = await diagnosticoService.createNewDiagnostico(req.body, {
+            filename: originalname,
+            data: buffer,
+            contentType: mimetype
+        });
+
+        if (!createdDiagnostico) {
             res.status(400).send({ status: "Error" });
-        }
-        else {
+        } else {
             res.status(201).send({ status: "OK", data: createdDiagnostico });
         }
     });
-
 };
+
 
 const updateOneDiagnostico = async (req, res) => {
     upload.single('pdf')(req, res, async function (err) {
