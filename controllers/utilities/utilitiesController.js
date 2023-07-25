@@ -50,6 +50,7 @@ const ejecutarModelo = async (req, res) => {
             const convertedImage = fs.readFileSync(convertedImageFilePath);
             const base64Image = convertedImage.toString('base64');
             fs.unlinkSync(imageFilePath);
+            fs.unlinkSync(convertedImageFilePath);
             // Enviar el resultado y la imagen convertida al cliente
             res.status(201).send({ status: "OK", data: { resultado, imagen: base64Image } });
 

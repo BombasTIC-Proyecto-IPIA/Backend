@@ -49,24 +49,14 @@ const createNewDiagnostico = async (req, res) => {
 
 
 const updateOneDiagnostico = async (req, res) => {
-    upload.single('pdf')(req, res, async function (err) {
-        if (err instanceof multer.MulterError) {
-            // Error de multer
-            console.error('Error de multer:', err);
-            return res.status(400).send('Error al cargar el archivo PDF.');
-        } else if (err) {
-            // Otro error
-            console.error('Otro error:', err);
-            return res.status(500).send('Ocurrió un error al cargar el archivo PDF.');
-        }
-        const updatedDiagnostico = await diagnosticoService.updateOneDiagnostico(req.body, req.params.dniPaciente, req.file);
+        const updatedDiagnostico = await diagnosticoService.updateOneDiagnostico(req.body, req.params.dniPaciente);
         if (updatedDiagnostico == undefined || updatedDiagnostico == null) {
             res.status(400).send({ status: "Error" });
         }
         else {
             res.status(204).send({ status: "OK", data: updatedDiagnostico });
         }
-    });
+
 };
 const deleteOneDiagnostico = async (req, res) => {
     await diagnosticoService.deleteOneDiagnostico(req.params.idDiagnostico);

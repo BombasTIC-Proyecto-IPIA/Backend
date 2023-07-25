@@ -2,7 +2,6 @@ const db = require('../../models')
 const bcrypt = require('bcrypt');
 const Diagnostico = db.diagnostico;
 const Paciente = db.pacientes;
-const fs = require('fs');
 
 const getAllDiagnosticos = async () => {
 
@@ -35,17 +34,12 @@ const createNewDiagnostico = async (diagnosticoData, fileData) => {
     return null;
 };
 
-const updateOneDiagnostico = async (diagnostico, dni, fichero) => {
+const updateOneDiagnostico = async (diagnostico, dni) => {
     var updatedDiagnostico = null;
-    const pdf = fs.readFileSync(fichero.path);
     try {
         await Diagnostico.findOne({ where: { PacienteDni: dni } })
             .then((record) => {
                 if (record) {
-                    // Update the username field if provided
-                    if (pdf) {
-                        record.documento = pdf;
-                    }
                     // Update the password field if provided
                     if (diagnostico.resultados) {
                         record.resultados = diagnostico.resultados;
@@ -60,6 +54,7 @@ const updateOneDiagnostico = async (diagnostico, dni, fichero) => {
     } catch (err) {
         return null;
     }
+    console.log(updatedDiagnostico)
     return updatedDiagnostico;
 }
 
